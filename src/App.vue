@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-container">
     <Header />
     <AddItem @addItem="handleAddItem"/>
     <TaskList 
@@ -7,7 +7,6 @@
       @completeItem="handleCompleteItem" 
       @deleteItem="handleDeleteItem"
     />
-
   </div>
 </template>
 
@@ -26,7 +25,7 @@ export default {
   },
   data: function() {
     return {
-      todos: [{
+      todos: JSON.parse(localStorage.getItem('todos')) || [{
         text: 'Do the Washing Up',
         completed: true,
         _id: uuid()
@@ -58,19 +57,39 @@ export default {
       this.todos = this.todos.filter(todo => todo._id !== _id);
     }
   },
-  mounted() {
+  created() {
 
+  },
+  updated() {
+    localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 }
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
+}
+.app-container {
+  height: 100%;
+
+  overflow: auto;
+
+  background: rgb(0,215,222);
+  background: linear-gradient(185deg, rgba(0,215,222,1) 0%, rgba(2,158,196,1) 52%, rgba(1,89,232,1) 100%);
 }
 </style>

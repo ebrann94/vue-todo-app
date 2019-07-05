@@ -3,7 +3,7 @@
         <transition-group name="fade" tag="ul"> 
             <ListItem 
                 v-for="todo in todos"
-                :key="todo._id"
+                v-bind:key="todo._id"
                 v-bind:text="todo.text"
                 v-bind:completed="todo.completed"
                 v-bind:_id="todo._id"
@@ -30,11 +30,28 @@ ul {
     padding: 0;
 }
 
-.fade-enter-active, .fade-leave-active{
-    transition: opacity 1s;
+.fade-enter {
+    opacity: 0;
+    max-height: 0px;
 }
 
-.fade-enter, .fade-leave-to {
-    opacity: 0;
+.fade-enter-to {
+    max-height: 100px;
+    opacity: 1;
+    transition: all 200ms;
 }
+
+.fade-leave {
+    max-height: 50px;
+    opacity: 1;
+    overflow: hidden;
+} 
+
+.fade-leave-to {
+    max-height: 0px;
+    opacity: 0;
+    transition: all 200ms;
+    overflow: hidden;
+}
+
 </style>
